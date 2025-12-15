@@ -1,1117 +1,1071 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charly & Margaux - Notre Histoire d'Amour</title>
-
-```
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- Firebase SDK v9 -->
-<script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getDatabase, ref, set, get, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
-    window.firebaseModules = { initializeApp, getDatabase, ref, set, get, onValue };
-    window.firebaseReady = true;
-    console.log('✅ Firebase SDK chargé');
-</script>
-
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     
-    :root {
-        --primary: #FF6B9D;
-        --secondary: #FFB84D;
-        --accent: #9D4EDD;
-        --success: #06D6A0;
-        --error: #EF4444;
-        --bg: #FFF8F3;
-        --card: #FFFFFF;
-        --text: #2D1B2E;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    body {
-        font-family: 'Inter', sans-serif;
-        background: linear-gradient(135deg, #FFF8F3 0%, #FFE8F0 100%);
-        color: var(--text);
-        min-height: 100vh;
-        overflow-x: hidden;
-        position: relative;
-    }
+    <!-- Firebase SDK v9 -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, set, get, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        window.firebaseModules = { initializeApp, getDatabase, ref, set, get, onValue };
+        window.firebaseReady = true;
+        console.log('✅ Firebase SDK chargé');
+    </script>
     
-    /* Floating hearts background */
-    .hearts-container {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 1;
-        overflow: hidden;
-    }
-    
-    .floating-heart {
-        position: absolute;
-        font-size: 20px;
-        opacity: 0;
-        animation: floatHeart 12s ease-in infinite;
-    }
-    
-    @keyframes floatHeart {
-        0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-        10% { opacity: 0.7; }
-        90% { opacity: 0.3; }
-        100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
-    }
-    
-    /* Toast - TOP RIGHT */
-    .toast-container {
-        position: fixed;
-        top: 80px;
-        right: 20px;
-        z-index: 10000;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        max-width: 350px;
-    }
-    
-    .toast {
-        background: white;
-        padding: 16px 20px;
-        border-radius: 12px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        border-left: 4px solid var(--success);
-        animation: slideIn 0.3s ease;
-        font-size: 0.9rem;
-        font-weight: 500;
-    }
-    
-    .toast.error { border-left-color: var(--error); }
-    .toast.warning { border-left-color: var(--secondary); }
-    
-    @keyframes slideIn {
-        from { transform: translateX(400px); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-    
-    .toast.hiding { animation: slideOut 0.3s ease forwards; }
-    
-    @keyframes slideOut {
-        to { transform: translateX(400px); opacity: 0; }
-    }
-    
-    /* Sync status */
-    .sync-status {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: white;
-        padding: 12px 20px;
-        border-radius: 24px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        z-index: 9999;
-        font-size: 0.85rem;
-        font-weight: 600;
-    }
-    
-    .sync-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-    }
-    
-    .sync-status.connected .sync-dot { background: var(--success); }
-    .sync-status.local .sync-dot { background: var(--secondary); }
-    .sync-status.error .sync-dot { background: var(--error); }
-    
-    /* Confetti */
-    .confetti {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        z-index: 9999;
-        animation: confettiFall 3s linear forwards;
-    }
-    
-    @keyframes confettiFall {
-        to {
-            transform: translateY(100vh) rotate(720deg);
-            opacity: 0;
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #FF6B9D;
+            --secondary: #FFB84D;
+            --accent: #9D4EDD;
+            --success: #06D6A0;
+            --error: #EF4444;
+            --bg: #FFF8F3;
+            --card: #FFFFFF;
+            --text: #2D1B2E;
         }
-    }
-    
-    /* Header */
-    header {
-        text-align: center;
-        padding: 80px 20px 60px;
-        position: relative;
-        z-index: 10;
-    }
-    
-    h1 {
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(3rem, 10vw, 6rem);
-        font-weight: 900;
-        background: linear-gradient(135deg, var(--primary), var(--accent));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 16px;
-        cursor: pointer;
-        transition: transform 0.3s;
-        user-select: none;
-    }
-    
-    h1:hover { transform: scale(1.02); }
-    
-    .subtitle {
-        font-family: 'Caveat', cursive;
-        font-size: clamp(1.5rem, 4vw, 2.5rem);
-        color: #6B5B6E;
-        font-weight: 600;
-    }
-    
-    /* Container */
-    .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 0 20px 100px;
-        position: relative;
-        z-index: 10;
-    }
-    
-    /* Grid */
-    .memories-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-        gap: 32px;
-        margin-top: 40px;
-    }
-    
-    /* Memory Card */
-    .memory-card {
-        background: var(--card);
-        border-radius: 24px;
-        overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        transition: all 0.3s ease;
-    }
-    
-    .memory-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 40px rgba(255,107,157,0.2);
-    }
-    
-    .card-number {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        width: 48px;
-        height: 48px;
-        background: linear-gradient(135deg, var(--secondary), var(--primary));
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Playfair Display', serif;
-        font-weight: 900;
-        font-size: 1.25rem;
-        color: white;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 10;
-    }
-    
-    .card-image {
-        width: 100%;
-        height: 240px;
-        background: linear-gradient(135deg, #FFE8F0, #E8F5FF);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .card-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    
-    .image-placeholder {
-        font-size: 4rem;
-        opacity: 0.3;
-    }
-    
-    .card-content {
-        padding: 24px;
-    }
-    
-    .card-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--primary);
-        font-weight: 700;
-        margin-bottom: 12px;
-    }
-    
-    .card-text {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        color: var(--text);
-        margin-bottom: 20px;
-        min-height: 60px;
-    }
-    
-    .card-button {
-        width: 100%;
-        background: linear-gradient(135deg, var(--primary), var(--accent));
-        color: white;
-        border: none;
-        padding: 14px 24px;
-        border-radius: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-    }
-    
-    .card-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(255,107,157,0.3);
-    }
-    
-    /* FAB */
-    .fab-container {
-        position: fixed;
-        bottom: 32px;
-        right: 32px;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        z-index: 1000;
-    }
-    
-    .fab {
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        border: none;
-        background: linear-gradient(135deg, var(--primary), var(--accent));
-        color: white;
-        font-size: 1.75rem;
-        cursor: pointer;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-        transition: all 0.3s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .fab:hover {
-        transform: scale(1.1);
-        box-shadow: 0 12px 32px rgba(255,107,157,0.3);
-    }
-    
-    .fab-settings {
-        background: linear-gradient(135deg, var(--secondary), #FFD700);
-    }
-    
-    /* Modal */
-    .modal {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(45,27,46,0.7);
-        backdrop-filter: blur(10px);
-        z-index: 10000;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
-    
-    .modal.active { display: flex; }
-    
-    .modal-content {
-        background: white;
-        border-radius: 24px;
-        padding: 40px;
-        max-width: 600px;
-        width: 100%;
-        max-height: 90vh;
-        overflow-y: auto;
-        position: relative;
-        box-shadow: 0 24px 64px rgba(0,0,0,0.3);
-    }
-    
-    .modal-close {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: none;
-        background: #f5f5f5;
-        color: var(--text);
-        font-size: 1.5rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s;
-    }
-    
-    .modal-close:hover {
-        background: var(--primary);
-        color: white;
-        transform: rotate(90deg);
-    }
-    
-    .modal h2 {
-        font-family: 'Playfair Display', serif;
-        font-size: 2rem;
-        font-weight: 900;
-        margin-bottom: 32px;
-    }
-    
-    .form-group { margin-bottom: 24px; }
-    
-    .form-label {
-        display: block;
-        font-weight: 600;
-        font-size: 0.9rem;
-        margin-bottom: 8px;
-    }
-    
-    .form-input, .form-textarea {
-        width: 100%;
-        padding: 14px 16px;
-        border: 2px solid #f0f0f0;
-        border-radius: 12px;
-        font-family: 'Inter', sans-serif;
-        font-size: 0.95rem;
-        transition: border-color 0.3s;
-    }
-    
-    .form-textarea {
-        min-height: 120px;
-        resize: vertical;
-    }
-    
-    .form-input:focus, .form-textarea:focus {
-        outline: none;
-        border-color: var(--primary);
-    }
-    
-    .file-input { display: none; }
-    
-    .file-label {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 12px 24px;
-        background: #f5f5f5;
-        border: 2px dashed #e0e0e0;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.3s;
-        font-weight: 600;
-    }
-    
-    .file-label:hover {
-        border-color: var(--primary);
-        background: rgba(255,107,157,0.05);
-    }
-    
-    .file-name {
-        margin-top: 8px;
-        font-size: 0.85rem;
-        color: var(--success);
-        font-weight: 500;
-    }
-    
-    .btn-primary {
-        width: 100%;
-        padding: 16px 32px;
-        background: linear-gradient(135deg, var(--primary), var(--accent));
-        color: white;
-        border: none;
-        border-radius: 12px;
-        font-weight: 700;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s;
-        margin-top: 8px;
-    }
-    
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(255,107,157,0.3);
-    }
-    
-    .btn-secondary {
-        width: 100%;
-        padding: 16px 32px;
-        background: white;
-        color: var(--text);
-        border: 2px solid #e0e0e0;
-        border-radius: 12px;
-        font-weight: 700;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s;
-        margin-top: 12px;
-    }
-    
-    .btn-secondary:hover {
-        border-color: var(--primary);
-    }
-    
-    .info-box {
-        background: linear-gradient(135deg, rgba(6,214,160,0.1), rgba(168,216,255,0.1));
-        padding: 20px;
-        border-radius: 12px;
-        margin-top: 24px;
-        border-left: 4px solid var(--success);
-        font-size: 0.9rem;
-        line-height: 1.6;
-    }
-    
-    .code-snippet {
-        background: #1a1a1a;
-        color: #00ff00;
-        padding: 16px;
-        border-radius: 8px;
-        font-family: monospace;
-        font-size: 0.85rem;
-        margin: 12px 0;
-        overflow-x: auto;
-    }
-    
-    .spinner {
-        width: 40px;
-        height: 40px;
-        border: 4px solid rgba(255,107,157,0.2);
-        border-top-color: var(--primary);
-        border-radius: 50%;
-        animation: spin 0.8s linear infinite;
-        margin: 20px auto;
-    }
-    
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
-    
-    .spinner-overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(255,255,255,0.9);
-        z-index: 9998;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .spinner-overlay.active { display: flex; }
-    
-    @media (max-width: 768px) {
-        .memories-grid { grid-template-columns: 1fr; gap: 24px; }
-        .fab-container { bottom: 24px; right: 24px; }
-        .fab { width: 56px; height: 56px; }
-        .sync-status { top: 12px; right: 12px; font-size: 0.8rem; padding: 10px 16px; }
-        .toast-container { top: 70px; right: 12px; left: 12px; }
-    }
-</style>
-```
-
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #FFF8F3 0%, #FFE8F0 100%);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Floating hearts background */
+        .hearts-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: floatHeart 12s ease-in infinite;
+        }
+        
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        /* Toast - TOP RIGHT */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 350px;
+        }
+        
+        .toast {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid var(--success);
+            animation: slideIn 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .toast.error { border-left-color: var(--error); }
+        .toast.warning { border-left-color: var(--secondary); }
+        
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .toast.hiding { animation: slideOut 0.3s ease forwards; }
+        
+        @keyframes slideOut {
+            to { transform: translateX(400px); opacity: 0; }
+        }
+        
+        /* Sync status */
+        .sync-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 9999;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .sync-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .sync-status.connected .sync-dot { background: var(--success); }
+        .sync-status.local .sync-dot { background: var(--secondary); }
+        .sync-status.error .sync-dot { background: var(--error); }
+        
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            z-index: 9999;
+            animation: confettiFall 3s linear forwards;
+        }
+        
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            user-select: none;
+        }
+        
+        h1:hover { transform: scale(1.02); }
+        
+        .subtitle {
+            font-family: 'Caveat', cursive;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: #6B5B6E;
+            font-weight: 600;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Grid */
+        .memories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+        
+        /* Memory Card */
+        .memory-card {
+            background: var(--card);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .memory-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(255,107,157,0.2);
+        }
+        
+        .card-number {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 1.25rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(135deg, #FFE8F0, #E8F5FF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-placeholder {
+            font-size: 4rem;
+            opacity: 0.3;
+        }
+        
+        .card-content {
+            padding: 24px;
+        }
+        
+        .card-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .card-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 20px;
+            min-height: 60px;
+        }
+        
+        .card-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,107,157,0.3);
+        }
+        
+        /* FAB */
+        .fab-container {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 1000;
+        }
+        
+        .fab {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            font-size: 1.75rem;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 32px rgba(255,107,157,0.3);
+        }
+        
+        .fab-settings {
+            background: linear-gradient(135deg, var(--secondary), #FFD700);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(45,27,46,0.7);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal.active { display: flex; }
+        
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .modal-close:hover {
+            background: var(--primary);
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .modal h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 32px;
+        }
+        
+        .form-group { margin-bottom: 24px; }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .file-input { display: none; }
+        
+        .file-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: #f5f5f5;
+            border: 2px dashed #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .file-label:hover {
+            border-color: var(--primary);
+            background: rgba(255,107,157,0.05);
+        }
+        
+        .file-name {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: var(--success);
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 8px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255,107,157,0.3);
+        }
+        
+        .btn-secondary {
+            width: 100%;
+            padding: 16px 32px;
+            background: white;
+            color: var(--text);
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 12px;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, rgba(6,214,160,0.1), rgba(168,216,255,0.1));
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 24px;
+            border-left: 4px solid var(--success);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-snippet {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin: 12px 0;
+            overflow-x: auto;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,107,157,0.2);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .spinner-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.9);
+            z-index: 9998;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .spinner-overlay.active { display: flex; }
+        
+        @media (max-width: 768px) {
+            .memories-grid { grid-template-columns: 1fr; gap: 24px; }
+            .fab-container { bottom: 24px; right: 24px; }
+            .fab { width: 56px; height: 56px; }
+            .sync-status { top: 12px; right: 12px; font-size: 0.8rem; padding: 10px 16px; }
+            .toast-container { top: 70px; right: 12px; left: 12px; }
+        }
+    </style>
 </head>
 <body>
     <!-- Floating hearts -->
     <div class="hearts-container" id="heartsContainer"></div>
-
-```
-<!-- Sync status -->
-<div class="sync-status local" id="syncStatus">
-    <div class="sync-dot"></div>
-    <span id="syncText">Initialisation...</span>
-</div>
-
-<!-- Toast -->
-<div class="toast-container" id="toastContainer"></div>
-
-<!-- Spinner -->
-<div class="spinner-overlay" id="spinnerOverlay">
-    <div class="spinner"></div>
-</div>
-
-<!-- Header -->
-<header>
-    <h1 onclick="handleTitleClick()">Charly & Margaux</h1>
-    <p class="subtitle">Notre histoire d'amour en images ❤️</p>
-</header>
-
-<!-- Container -->
-<div class="container">
-    <div class="memories-grid" id="memoriesGrid"></div>
-</div>
-
-<!-- FABs -->
-<div class="fab-container">
-    <button class="fab fab-settings" onclick="openSettings()">⚙️</button>
-    <button class="fab fab-add" onclick="addMemory()">+</button>
-</div>
-
-<!-- Edit Modal -->
-<div class="modal" id="editModal">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeModal('editModal')">×</button>
-        <h2>✨ Modifier ce souvenir</h2>
-        <form id="editForm" onsubmit="saveMemory(event)">
-            <div class="form-group">
-                <label class="form-label">📝 Message</label>
-                <textarea id="noteInput" class="form-textarea" required></textarea>
-            </div>
-            <div class="form-group">
-                <label class="form-label">📸 Photo</label>
-                <input type="file" id="photoInput" class="file-input" accept="image/*" onchange="handlePhoto()">
-                <label for="photoInput" class="file-label">
-                    <span>📁</span><span>Choisir une photo</span>
-                </label>
-                <div id="fileName" class="file-name"></div>
-            </div>
-            <button type="submit" class="btn-primary">💾 Sauvegarder</button>
-        </form>
+    
+    <!-- Sync status -->
+    <div class="sync-status local" id="syncStatus">
+        <div class="sync-dot"></div>
+        <span id="syncText">Initialisation...</span>
     </div>
-</div>
-
-<!-- Settings Modal -->
-<div class="modal" id="settingsModal">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeModal('settingsModal')">×</button>
-        <h2>⚙️ Configuration Firebase</h2>
-        <div class="info-box">
-            <strong>📚 Configuration :</strong>
-            <p>1. <a href="https://console.firebase.google.com" target="_blank" style="color: var(--primary)">Firebase Console</a> → Créer un projet</p>
-            <p>2. Realtime Database → Mode test</p>
-            <p>3. Règles :</p>
-            <div class="code-snippet">{
-```
-
-“rules”: {
-“.read”: true,
-“.write”: true
-}
+    
+    <!-- Toast -->
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <!-- Spinner -->
+    <div class="spinner-overlay" id="spinnerOverlay">
+        <div class="spinner"></div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <h1 onclick="handleTitleClick()">Charly & Margaux</h1>
+        <p class="subtitle">Notre histoire d'amour en images ❤️</p>
+    </header>
+    
+    <!-- Container -->
+    <div class="container">
+        <div class="memories-grid" id="memoriesGrid"></div>
+    </div>
+    
+    <!-- FABs -->
+    <div class="fab-container">
+        <button class="fab fab-settings" onclick="openSettings()">⚙️</button>
+        <button class="fab fab-add" onclick="addMemory()">+</button>
+    </div>
+    
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('editModal')">×</button>
+            <h2>✨ Modifier ce souvenir</h2>
+            <form id="editForm" onsubmit="saveMemory(event)">
+                <div class="form-group">
+                    <label class="form-label">📝 Message</label>
+                    <textarea id="noteInput" class="form-textarea" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📸 Photo</label>
+                    <input type="file" id="photoInput" class="file-input" accept="image/*" onchange="handlePhoto()">
+                    <label for="photoInput" class="file-label">
+                        <span>📁</span><span>Choisir une photo</span>
+                    </label>
+                    <div id="fileName" class="file-name"></div>
+                </div>
+                <button type="submit" class="btn-primary">💾 Sauvegarder</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('settingsModal')">×</button>
+            <h2>⚙️ Configuration Firebase</h2>
+            <div class="info-box">
+                <strong>📚 Configuration :</strong>
+                <p>1. <a href="https://console.firebase.google.com" target="_blank" style="color: var(--primary)">Firebase Console</a> → Créer un projet</p>
+                <p>2. Realtime Database → Mode test</p>
+                <p>3. Règles :</p>
+                <div class="code-snippet">{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
 }</div>
-<p>4. Copier la configuration Web</p>
-<p><strong>⚠️ IMPORTANT:</strong> L’URL doit commencer par <strong>https://</strong></p>
-</div>
-<form id="settingsForm" onsubmit="saveConfig(event)">
-<div class="form-group">
-<label class="form-label">🔑 API Key</label>
-<input type="text" id="apiKey" class="form-input" placeholder="AIza..." required>
-</div>
-<div class="form-group">
-<label class="form-label">🌐 Database URL</label>
-<input type="text" id="dbUrl" class="form-input" placeholder="https://...firebasedatabase.app" required>
-</div>
-<div class="form-group">
-<label class="form-label">📦 Project ID</label>
-<input type="text" id="projectId" class="form-input" placeholder="mon-projet" required>
-</div>
-<button type="submit" class="btn-primary">✅ Sauvegarder</button>
-<button type="button" class="btn-secondary" onclick="testConnection()">🧪 Tester</button>
-</form>
-</div>
-</div>
-
-```
-<script>
-    // STATE
-    let memories = [];
-    let editIndex = -1;
-    let db = null;
-    let app = null;
-    let isConnected = false;
-    let titleClicks = 0;
-    let titleClickTimer = null;
+                <p>4. Copier la configuration Web</p>
+                <p><strong>⚠️ IMPORTANT:</strong> L'URL doit commencer par <strong>https://</strong></p>
+            </div>
+            <form id="settingsForm" onsubmit="saveConfig(event)">
+                <div class="form-group">
+                    <label class="form-label">🔑 API Key</label>
+                    <input type="text" id="apiKey" class="form-input" placeholder="AIza..." required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">🌐 Database URL</label>
+                    <input type="text" id="dbUrl" class="form-input" placeholder="https://...firebasedatabase.app" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📦 Project ID</label>
+                    <input type="text" id="projectId" class="form-input" placeholder="mon-projet" required>
+                </div>
+                <button type="submit" class="btn-primary">✅ Sauvegarder</button>
+                <button type="button" class="btn-secondary" onclick="testConnection()">🧪 Tester</button>
+            </form>
+        </div>
+    </div>
     
-    // FLOATING HEARTS
-    function startFloatingHearts() {
-        const container = document.getElementById('heartsContainer');
-        const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💞'];
+    <script>
+        // STATE
+        let memories = [];
+        let editIndex = -1;
+        let db = null;
+        let app = null;
+        let isConnected = false;
+        let titleClicks = 0;
+        let titleClickTimer = null;
         
-        setInterval(() => {
-            const heart = document.createElement('div');
-            heart.className = 'floating-heart';
-            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDelay = Math.random() * 2 + 's';
-            heart.style.animationDuration = (Math.random() * 3 + 10) + 's';
-            container.appendChild(heart);
+        // FLOATING HEARTS
+        function startFloatingHearts() {
+            const container = document.getElementById('heartsContainer');
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💞'];
             
-            setTimeout(() => heart.remove(), 13000);
-        }, 3000);
-    }
-    
-    // CONFETTI
-    function createConfetti() {
-        const colors = ['#FF6B9D', '#FFB84D', '#9D4EDD', '#06D6A0', '#FF4757', '#FEC84E'];
-        for (let i = 0; i < 50; i++) {
-            setTimeout(() => {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.top = Math.random() * 20 + '%';
-                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                document.body.appendChild(confetti);
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.style.animationDuration = (Math.random() * 3 + 10) + 's';
+                container.appendChild(heart);
                 
-                setTimeout(() => confetti.remove(), 3000);
-            }, i * 30);
-        }
-    }
-    
-    // TITLE CLICK
-    function handleTitleClick() {
-        titleClicks++;
-        
-        if (titleClickTimer) clearTimeout(titleClickTimer);
-        
-        titleClickTimer = setTimeout(() => {
-            if (titleClicks === 3) {
-                createConfetti();
-                toast('Je t\'aime Charly ! 💕✨');
-            }
-            titleClicks = 0;
-        }, 500);
-    }
-    
-    // INIT
-    async function init() {
-        console.log('🚀 Démarrage...');
-        
-        // Start hearts
-        startFloatingHearts();
-        
-        // Init Firebase
-        const fbReady = await initFirebase();
-        
-        // Load data
-        await loadData();
-        
-        // Render
-        render();
-        
-        console.log('✅ Prêt!', { firebase: fbReady, memories: memories.length });
-    }
-    
-    // FIREBASE
-    async function initFirebase() {
-        const cfg = localStorage.getItem('fbConfig');
-        if (!cfg) {
-            updateStatus('local', 'Local uniquement');
-            return false;
+                setTimeout(() => heart.remove(), 13000);
+            }, 3000);
         }
         
-        try {
-            const config = JSON.parse(cfg);
+        // CONFETTI
+        function createConfetti() {
+            const colors = ['#FF6B9D', '#FFB84D', '#9D4EDD', '#06D6A0', '#FF4757', '#FEC84E'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = Math.random() * 20 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+        
+        // TITLE CLICK
+        function handleTitleClick() {
+            titleClicks++;
             
-            // CRITICAL: Ensure URL has https://
-            if (!config.databaseURL.startsWith('https://')) {
-                config.databaseURL = 'https://' + config.databaseURL;
-                localStorage.setItem('fbConfig', JSON.stringify(config));
-                console.log('🔧 URL corrigée:', config.databaseURL);
+            if (titleClickTimer) clearTimeout(titleClickTimer);
+            
+            titleClickTimer = setTimeout(() => {
+                if (titleClicks === 3) {
+                    createConfetti();
+                    toast('Je t\'aime Charly ! 💕✨');
+                }
+                titleClicks = 0;
+            }, 500);
+        }
+        
+        // INIT
+        async function init() {
+            console.log('🚀 Démarrage...');
+            
+            // Start hearts
+            startFloatingHearts();
+            
+            // Init Firebase
+            const fbReady = await initFirebase();
+            
+            // Load data
+            await loadData();
+            
+            // Render
+            render();
+            
+            console.log('✅ Prêt!', { firebase: fbReady, memories: memories.length });
+        }
+        
+        // FIREBASE
+        async function initFirebase() {
+            const cfg = localStorage.getItem('fbConfig');
+            if (!cfg) {
+                updateStatus('local', 'Local uniquement');
+                return false;
             }
             
-            // Wait SDK
-            await new Promise(r => {
-                const check = setInterval(() => {
-                    if (window.firebaseReady) {
-                        clearInterval(check);
-                        r();
-                    }
-                }, 50);
-                setTimeout(() => { clearInterval(check); r(); }, 10000);
-            });
-            
-            const { initializeApp, getDatabase, ref, onValue } = window.firebaseModules;
-            
-            app = initializeApp(config);
-            db = getDatabase(app);
-            isConnected = true;
-            
-            // Listen
-            const memRef = ref(db, 'memories');
-            onValue(memRef, (snap) => {
-                if (snap.exists()) {
-                    const data = snap.val();
-                    if (Array.isArray(data)) {
-                        // Compare both content AND length
-                        const oldHash = memories.length + ':' + JSON.stringify(memories.map(m => m.note));
-                        const newHash = data.length + ':' + JSON.stringify(data.map(m => m.note));
-                        
-                        if (oldHash !== newHash) {
-                            console.log('🔄 Sync depuis cloud');
-                            memories = data;
-                            render();
-                            toast('Synchronisé !');
+            try {
+                const config = JSON.parse(cfg);
+                
+                // CRITICAL: Ensure URL has https://
+                if (!config.databaseURL.startsWith('https://')) {
+                    config.databaseURL = 'https://' + config.databaseURL;
+                    localStorage.setItem('fbConfig', JSON.stringify(config));
+                    console.log('🔧 URL corrigée:', config.databaseURL);
+                }
+                
+                // Wait SDK
+                await new Promise(r => {
+                    const check = setInterval(() => {
+                        if (window.firebaseReady) {
+                            clearInterval(check);
+                            r();
+                        }
+                    }, 50);
+                    setTimeout(() => { clearInterval(check); r(); }, 10000);
+                });
+                
+                const { initializeApp, getDatabase, ref, onValue } = window.firebaseModules;
+                
+                app = initializeApp(config);
+                db = getDatabase(app);
+                isConnected = true;
+                
+                // Listen
+                const memRef = ref(db, 'memories');
+                onValue(memRef, (snap) => {
+                    if (snap.exists()) {
+                        const data = snap.val();
+                        if (Array.isArray(data)) {
+                            const oldHash = JSON.stringify(memories.map(m => m.note));
+                            const newHash = JSON.stringify(data.map(m => m.note));
+                            
+                            if (oldHash !== newHash) {
+                                console.log('🔄 Sync depuis cloud');
+                                memories = data;
+                                render();
+                                toast('Synchronisé !');
+                            }
                         }
                     }
+                }, err => {
+                    console.error('❌ Listener error:', err);
+                    if (err.code === 'PERMISSION_DENIED') {
+                        toast('Erreur: Vérifie les règles Firebase', 'error');
+                        updateStatus('error', 'Permission refusée');
+                    }
+                });
+                
+                updateStatus('connected', 'Cloud synchronisé');
+                toast('Firebase connecté !');
+                console.log('✅ Firebase OK');
+                return true;
+                
+            } catch (e) {
+                console.error('❌ Firebase error:', e);
+                updateStatus('error', 'Erreur Firebase');
+                toast('Erreur Firebase: ' + e.message, 'error');
+                return false;
+            }
+        }
+        
+        // DATA
+        async function loadData() {
+            // From Firebase first
+            if (isConnected && db) {
+                try {
+                    const { ref, get } = window.firebaseModules;
+                    const snap = await get(ref(db, 'memories'));
+                    if (snap.exists()) {
+                        memories = snap.val();
+                        console.log('✅ Loaded from Firebase:', memories.length);
+                        localStorage.setItem('memories', JSON.stringify(memories));
+                        return;
+                    }
+                } catch (e) {
+                    console.error('Load error:', e);
                 }
-            }, err => {
-                console.error('❌ Listener error:', err);
-                if (err.code === 'PERMISSION_DENIED') {
-                    toast('Erreur: Vérifie les règles Firebase', 'error');
-                    updateStatus('error', 'Permission refusée');
+            }
+            
+            // From localStorage
+            const saved = localStorage.getItem('memories');
+            if (saved) {
+                memories = JSON.parse(saved);
+                console.log('✅ Loaded from local:', memories.length);
+            } else {
+                // Create defaults
+                memories = Array(6).fill(null).map(() => ({
+                    note: 'Clique sur "Modifier" pour ajouter ton souvenir ! 💖',
+                    photo: null,
+                    created: Date.now()
+                }));
+                await saveData();
+            }
+        }
+        
+        async function saveData() {
+            console.log('💾 Saving...');
+            
+            // Local
+            localStorage.setItem('memories', JSON.stringify(memories));
+            
+            // Firebase
+            if (isConnected && db) {
+                try {
+                    const { ref, set } = window.firebaseModules;
+                    await set(ref(db, 'memories'), memories);
+                    console.log('✅ Saved to Firebase');
+                    toast('Sauvegardé ☁️');
+                    createConfetti();
+                    return true;
+                } catch (e) {
+                    console.error('Save error:', e);
+                    toast('Sauvegarde locale uniquement', 'warning');
                 }
-            });
+            } else {
+                toast('Sauvegarde locale', 'warning');
+            }
             
-            updateStatus('connected', 'Cloud synchronisé');
-            toast('Firebase connecté !');
-            console.log('✅ Firebase OK');
-            return true;
-            
-        } catch (e) {
-            console.error('❌ Firebase error:', e);
-            updateStatus('error', 'Erreur Firebase');
-            toast('Erreur Firebase: ' + e.message, 'error');
             return false;
         }
-    }
-    
-    // DATA
-    async function loadData() {
-        console.log('📂 Loading data...');
         
-        // From Firebase first
-        if (isConnected && db) {
-            try {
-                console.log('☁️ Trying to load from Firebase /memories...');
-                const { ref, get } = window.firebaseModules;
-                const snap = await get(ref(db, 'memories'));
-                
-                console.log('Firebase snapshot exists:', snap.exists());
-                
-                if (snap.exists()) {
-                    const data = snap.val();
-                    console.log('Firebase data type:', Array.isArray(data) ? 'Array' : typeof data);
-                    console.log('Firebase data:', data);
-                    
-                    if (Array.isArray(data) && data.length > 0) {
-                        memories = data;
-                        console.log('✅ Loaded from Firebase:', memories.length, 'memories');
-                        console.log('📸 Photos:', memories.filter(m => m && m.photo).length);
-                        localStorage.setItem('memories', JSON.stringify(memories));
-                        toast('Chargé depuis Firebase ! ☁️');
-                        return;
-                    } else {
-                        console.warn('⚠️ Firebase data exists but is not a valid array or is empty');
-                    }
-                } else {
-                    console.warn('⚠️ Firebase /memories path is empty');
+        // UI
+        function render() {
+            const grid = document.getElementById('memoriesGrid');
+            grid.innerHTML = memories.map((m, i) => `
+                <div class="memory-card">
+                    <div class="card-number">${i + 1}</div>
+                    <div class="card-image">
+                        ${m.photo ? `<img src="${m.photo}" alt="Souvenir ${i+1}">` : '<div class="image-placeholder">📷</div>'}
+                    </div>
+                    <div class="card-content">
+                        <div class="card-label">💌 Notre moment</div>
+                        <div class="card-text">${m.note}</div>
+                        <button class="card-button" onclick="editMemory(${i})">
+                            <span>✏️</span><span>Modifier</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function updateStatus(type, text) {
+            const el = document.getElementById('syncStatus');
+            el.className = `sync-status ${type}`;
+            el.querySelector('span').textContent = text;
+        }
+        
+        function toast(msg, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'error' ? '❌' : type === 'warning' ? '⚠️' : '✅'}</span><span>${msg}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('hiding');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        function spinner(show) {
+            document.getElementById('spinnerOverlay').classList.toggle('active', show);
+        }
+        
+        // ACTIONS
+        function addMemory() {
+            memories.push({ note: 'Nouveau souvenir...', photo: null, created: Date.now() });
+            editMemory(memories.length - 1);
+        }
+        
+        function editMemory(i) {
+            editIndex = i;
+            document.getElementById('noteInput').value = memories[i].note;
+            document.getElementById('fileName').textContent = '';
+            document.getElementById('photoInput').value = '';
+            document.getElementById('editModal').classList.add('active');
+        }
+        
+        function handlePhoto() {
+            const input = document.getElementById('photoInput');
+            if (input.files[0]) {
+                document.getElementById('fileName').textContent = `✓ ${input.files[0].name}`;
+            }
+        }
+        
+        async function saveMemory(e) {
+            e.preventDefault();
+            if (editIndex === -1) return;
+            
+            spinner(true);
+            
+            const note = document.getElementById('noteInput').value;
+            const file = document.getElementById('photoInput').files[0];
+            
+            memories[editIndex].note = note;
+            memories[editIndex].updated = Date.now();
+            
+            if (file) {
+                try {
+                    const compressed = await compress(file);
+                    memories[editIndex].photo = compressed;
+                } catch (e) {
+                    console.error('Compression error:', e);
+                    toast('Erreur photo', 'error');
+                    spinner(false);
+                    return;
                 }
-            } catch (e) {
-                console.error('❌ Firebase load error:', e);
-                console.error('Error code:', e.code);
-                console.error('Error message:', e.message);
-                toast('Erreur Firebase: ' + e.message, 'error');
             }
-        } else {
-            console.log('⚠️ Firebase not connected, skipping Firebase load');
-        }
-        
-        // From localStorage
-        console.log('📦 Trying localStorage...');
-        const saved = localStorage.getItem('memories');
-        if (saved) {
-            try {
-                memories = JSON.parse(saved);
-                console.log('✅ Loaded from localStorage:', memories.length, 'memories');
-                toast('Chargé depuis stockage local');
-                return;
-            } catch (e) {
-                console.error('❌ localStorage parse error:', e);
-            }
-        }
-        
-        // Create defaults only if nothing found anywhere
-        console.log('🆕 No data found anywhere, creating defaults');
-        memories = Array(6).fill(null).map(() => ({
-            note: 'Clique sur "Modifier" pour ajouter ton souvenir ! 💖',
-            photo: null,
-            created: Date.now()
-        }));
-        await saveData();
-    }
-    
-    async function saveData() {
-        console.log('💾 Saving...');
-        
-        // Local
-        localStorage.setItem('memories', JSON.stringify(memories));
-        
-        // Firebase
-        if (isConnected && db) {
-            try {
-                const { ref, set } = window.firebaseModules;
-                await set(ref(db, 'memories'), memories);
-                console.log('✅ Saved to Firebase');
-                toast('Sauvegardé ☁️');
-                createConfetti();
-                return true;
-            } catch (e) {
-                console.error('Save error:', e);
-                toast('Sauvegarde locale uniquement', 'warning');
-            }
-        } else {
-            toast('Sauvegarde locale', 'warning');
-        }
-        
-        return false;
-    }
-    
-    // UI
-    function render() {
-        const grid = document.getElementById('memoriesGrid');
-        grid.innerHTML = memories.map((m, i) => `
-            <div class="memory-card">
-                <div class="card-number">${i + 1}</div>
-                <div class="card-image">
-                    ${m.photo ? `<img src="${m.photo}" alt="Souvenir ${i+1}">` : '<div class="image-placeholder">📷</div>'}
-                </div>
-                <div class="card-content">
-                    <div class="card-label">💌 Notre moment</div>
-                    <div class="card-text">${m.note}</div>
-                    <button class="card-button" onclick="editMemory(${i})">
-                        <span>✏️</span><span>Modifier</span>
-                    </button>
-                </div>
-            </div>
-        `).join('');
-    }
-    
-    function updateStatus(type, text) {
-        const el = document.getElementById('syncStatus');
-        el.className = `sync-status ${type}`;
-        el.querySelector('span').textContent = text;
-    }
-    
-    function toast(msg, type = 'success') {
-        const container = document.getElementById('toastContainer');
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        toast.innerHTML = `<span>${type === 'error' ? '❌' : type === 'warning' ? '⚠️' : '✅'}</span><span>${msg}</span>`;
-        container.appendChild(toast);
-        setTimeout(() => {
-            toast.classList.add('hiding');
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    }
-    
-    function spinner(show) {
-        document.getElementById('spinnerOverlay').classList.toggle('active', show);
-    }
-    
-    // ACTIONS
-    async function addMemory() {
-        memories.push({ note: 'Nouveau souvenir...', photo: null, created: Date.now() });
-        
-        // CRITICAL: Save immediately so the new slot exists in Firebase
-        await saveData();
-        
-        editMemory(memories.length - 1);
-    }
-    
-    function editMemory(i) {
-        editIndex = i;
-        document.getElementById('noteInput').value = memories[i].note;
-        document.getElementById('fileName').textContent = '';
-        document.getElementById('photoInput').value = '';
-        document.getElementById('editModal').classList.add('active');
-    }
-    
-    function handlePhoto() {
-        const input = document.getElementById('photoInput');
-        if (input.files[0]) {
-            document.getElementById('fileName').textContent = `✓ ${input.files[0].name}`;
-        }
-    }
-    
-    async function saveMemory(e) {
-        e.preventDefault();
-        if (editIndex === -1) return;
-        
-        spinner(true);
-        
-        const note = document.getElementById('noteInput').value;
-        const file = document.getElementById('photoInput').files[0];
-        
-        memories[editIndex].note = note;
-        memories[editIndex].updated = Date.now();
-        
-        if (file) {
-            try {
-                const compressed = await compress(file);
-                memories[editIndex].photo = compressed;
-            } catch (e) {
-                console.error('Compression error:', e);
-                toast('Erreur photo', 'error');
-                spinner(false);
-                return;
-            }
-        }
-        
-        await saveData();
-        render();
-        closeModal('editModal');
-        spinner(false);
-    }
-    
-    function compress(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = e => {
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    let w = img.width, h = img.height;
-                    const max = 1200;
-                    if (w > max || h > max) {
-                        if (w > h) { h = (h/w) * max; w = max; }
-                        else { w = (w/h) * max; h = max; }
-                    }
-                    canvas.width = w;
-                    canvas.height = h;
-                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                    resolve(canvas.toDataURL('image/jpeg', 0.8));
-                };
-                img.onerror = reject;
-                img.src = e.target.result;
-            };
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-        });
-    }
-    
-    // SETTINGS
-    function openSettings() {
-        const cfg = localStorage.getItem('fbConfig');
-        if (cfg) {
-            const c = JSON.parse(cfg);
-            document.getElementById('apiKey').value = c.apiKey || '';
-            document.getElementById('dbUrl').value = c.databaseURL || '';
-            document.getElementById('projectId').value = c.projectId || '';
-        }
-        document.getElementById('settingsModal').classList.add('active');
-    }
-    
-    function saveConfig(e) {
-        e.preventDefault();
-        let dbUrl = document.getElementById('dbUrl').value.trim();
-        
-        // Auto-add https:// if missing
-        if (!dbUrl.startsWith('https://') && !dbUrl.startsWith('http://')) {
-            dbUrl = 'https://' + dbUrl;
-        }
-        
-        const config = {
-            apiKey: document.getElementById('apiKey').value.trim(),
-            databaseURL: dbUrl,
-            projectId: document.getElementById('projectId').value.trim(),
-            authDomain: document.getElementById('projectId').value.trim() + '.firebaseapp.com',
-            storageBucket: document.getElementById('projectId').value.trim() + '.appspot.com'
-        };
-        
-        localStorage.setItem('fbConfig', JSON.stringify(config));
-        toast('Config sauvegardée ! Rechargement...');
-        setTimeout(() => location.reload(), 1500);
-    }
-    
-    async function testConnection() {
-        const apiKey = document.getElementById('apiKey').value.trim();
-        let dbUrl = document.getElementById('dbUrl').value.trim();
-        const projectId = document.getElementById('projectId').value.trim();
-        
-        if (!apiKey || !dbUrl || !projectId) {
-            toast('Remplis tous les champs !', 'error');
-            return;
-        }
-        
-        // Auto-add https://
-        if (!dbUrl.startsWith('https://') && !dbUrl.startsWith('http://')) {
-            dbUrl = 'https://' + dbUrl;
-            document.getElementById('dbUrl').value = dbUrl;
-        }
-        
-        toast('Test en cours...', 'warning');
-        
-        try {
-            const { initializeApp, getDatabase, ref, get } = window.firebaseModules;
             
-            const testApp = initializeApp({
-                apiKey, databaseURL: dbUrl, projectId,
-                authDomain: projectId + '.firebaseapp.com',
-                storageBucket: projectId + '.appspot.com'
-            }, 'test-' + Date.now());
-            
-            const testDb = getDatabase(testApp);
-            await get(ref(testDb, '.info/connected'));
-            
-            toast('✅ Connexion OK !');
-        } catch (e) {
-            console.error('Test error:', e);
-            toast('❌ ' + e.message, 'error');
-        }
-    }
-    
-    // UTILS
-    function closeModal(id) {
-        document.getElementById(id).classList.remove('active');
-        if (id === 'editModal') editIndex = -1;
-    }
-    
-    document.addEventListener('click', e => {
-        if (e.target.classList.contains('modal')) {
-            e.target.classList.remove('active');
-        }
-    });
-    
-    // AUTO-SAVE
-    setInterval(async () => {
-        if (memories.length > 0 && isConnected) {
-            console.log('⏰ Auto-save');
             await saveData();
+            render();
+            closeModal('editModal');
+            spinner(false);
         }
-    }, 30000);
-    
-    // START
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-</script>
-```
-
+        
+        function compress(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let w = img.width, h = img.height;
+                        const max = 1200;
+                        if (w > max || h > max) {
+                            if (w > h) { h = (h/w) * max; w = max; }
+                            else { w = (w/h) * max; h = max; }
+                        }
+                        canvas.width = w;
+                        canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        resolve(canvas.toDataURL('image/jpeg', 0.8));
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        // SETTINGS
+        function openSettings() {
+            const cfg = localStorage.getItem('fbConfig');
+            if (cfg) {
+                const c = JSON.parse(cfg);
+                document.getElementById('apiKey').value = c.apiKey || '';
+                document.getElementById('dbUrl').value = c.databaseURL || '';
+                document.getElementById('projectId').value = c.projectId || '';
+            }
+            document.getElementById('settingsModal').classList.add('active');
+        }
+        
+        function saveConfig(e) {
+            e.preventDefault();
+            let dbUrl = document.getElementById('dbUrl').value.trim();
+            
+            // Auto-add https:// if missing
+            if (!dbUrl.startsWith('https://') && !dbUrl.startsWith('http://')) {
+                dbUrl = 'https://' + dbUrl;
+            }
+            
+            const config = {
+                apiKey: document.getElementById('apiKey').value.trim(),
+                databaseURL: dbUrl,
+                projectId: document.getElementById('projectId').value.trim(),
+                authDomain: document.getElementById('projectId').value.trim() + '.firebaseapp.com',
+                storageBucket: document.getElementById('projectId').value.trim() + '.appspot.com'
+            };
+            
+            localStorage.setItem('fbConfig', JSON.stringify(config));
+            toast('Config sauvegardée ! Rechargement...');
+            setTimeout(() => location.reload(), 1500);
+        }
+        
+        async function testConnection() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            let dbUrl = document.getElementById('dbUrl').value.trim();
+            const projectId = document.getElementById('projectId').value.trim();
+            
+            if (!apiKey || !dbUrl || !projectId) {
+                toast('Remplis tous les champs !', 'error');
+                return;
+            }
+            
+            // Auto-add https://
+            if (!dbUrl.startsWith('https://') && !dbUrl.startsWith('http://')) {
+                dbUrl = 'https://' + dbUrl;
+                document.getElementById('dbUrl').value = dbUrl;
+            }
+            
+            toast('Test en cours...', 'warning');
+            
+            try {
+                const { initializeApp, getDatabase, ref, get } = window.firebaseModules;
+                
+                const testApp = initializeApp({
+                    apiKey, databaseURL: dbUrl, projectId,
+                    authDomain: projectId + '.firebaseapp.com',
+                    storageBucket: projectId + '.appspot.com'
+                }, 'test-' + Date.now());
+                
+                const testDb = getDatabase(testApp);
+                await get(ref(testDb, '.info/connected'));
+                
+                toast('✅ Connexion OK !');
+            } catch (e) {
+                console.error('Test error:', e);
+                toast('❌ ' + e.message, 'error');
+            }
+        }
+        
+        // UTILS
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            if (id === 'editModal') editIndex = -1;
+        }
+        
+        document.addEventListener('click', e => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+        });
+        
+        // AUTO-SAVE
+        setInterval(async () => {
+            if (memories.length > 0 && isConnected) {
+                console.log('⏰ Auto-save');
+                await saveData();
+            }
+        }, 30000);
+        
+        // START
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
 </body>
 </html>

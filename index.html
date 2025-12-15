@@ -801,36 +801,67 @@
     
     // DATA
     async function loadData() {
+        console.log('📂 Loading data...');
+        
         // From Firebase first
         if (isConnected && db) {
             try {
+                console.log('☁️ Trying to load from Firebase /memories...');
                 const { ref, get } = window.firebaseModules;
                 const snap = await get(ref(db, 'memories'));
+                
+                console.log('Firebase snapshot exists:', snap.exists());
+                
                 if (snap.exists()) {
-                    memories = snap.val();
-                    console.log('✅ Loaded from Firebase:', memories.length);
-                    localStorage.setItem('memories', JSON.stringify(memories));
-                    return;
+                    const data = snap.val();
+                    console.log('Firebase data type:', Array.isArray(data) ? 'Array' : typeof data);
+                    console.log('Firebase data:', data);
+                    
+                    if (Array.isArray(data) && data.length > 0) {
+                        memories = data;
+                        console.log('✅ Loaded from Firebase:', memories.length, 'memories');
+                        console.log('📸 Photos:', memories.filter(m => m && m.photo).length);
+                        localStorage.setItem('memories', JSON.stringify(memories));
+                        toast('Chargé depuis Firebase ! ☁️');
+                        return;
+                    } else {
+                        console.warn('⚠️ Firebase data exists but is not a valid array or is empty');
+                    }
+                } else {
+                    console.warn('⚠️ Firebase /memories path is empty');
                 }
             } catch (e) {
-                console.error('Load error:', e);
+                console.error('❌ Firebase load error:', e);
+                console.error('Error code:', e.code);
+                console.error('Error message:', e.message);
+                toast('Erreur Firebase: ' + e.message, 'error');
             }
+        } else {
+            console.log('⚠️ Firebase not connected, skipping Firebase load');
         }
         
         // From localStorage
+        console.log('📦 Trying localStorage...');
         const saved = localStorage.getItem('memories');
         if (saved) {
-            memories = JSON.parse(saved);
-            console.log('✅ Loaded from local:', memories.length);
-        } else {
-            // Create defaults
-            memories = Array(6).fill(null).map(() => ({
-                note: 'Clique sur "Modifier" pour ajouter ton souvenir ! 💖',
-                photo: null,
-                created: Date.now()
-            }));
-            await saveData();
+            try {
+                memories = JSON.parse(saved);
+                console.log('✅ Loaded from localStorage:', memories.length, 'memories');
+                toast('Chargé depuis stockage local');
+                return;
+            } catch (e) {
+                console.error('❌ localStorage parse error:', e);
+            }
         }
+        
+        // Create defaults only if nothing found anywhere
+        console.log('🆕 No data found anywhere, creating defaults');
+        memories = Array(6).fill(null).map(() => ({
+            note: 'Clique sur "Modifier" pour ajouter ton souvenir ! 💖',
+            photo: null,
+            created: Date.now()
+        }));
+        await saveData();
     }
     
     async function saveData() {
